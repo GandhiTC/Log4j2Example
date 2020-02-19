@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+
+<!-- <Configuration status="WARN"> -->
+<Configuration status="WARN" packages="com.github.GandhiTC.java.Log4j2Example.helpers">
+
+
+	<Properties>
+		<Property name="BASE_PATH">logs/${project.groupId}/${project.artifactId}/$${date:yyyy}/$${date:MMM}/$${date:dd-MMM-yyyy}</Property>
+		<Property name="LOG_PATTERN">%d{MMM-dd-yyyy  hh:mm:ss.SSS a zzz (Z)}      [%04T]      %-5level      %logger{36}      (%F:%05L)      %msg%n</Property>
+		<Property name="FILE_PATTERN">%d{MMM-dd-yyyy}__%03i</Property>
+	</Properties>
+
+
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT" follow="true">
+			<PatternLayout pattern="${LOG_PATTERN}" />
+		</Console>
+		
+		<RollingRandomAccessFile name="TraceFiles" fileName="${BASE_PATH}/trace.log" filePattern="${BASE_PATH}/trace__${FILE_PATTERN}.log.gz">
+			<PatternLayout pattern="${LOG_PATTERN}" />
+			<Policies>
+                <SizeBasedTriggeringPolicy size="1 MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="10" />
+		</RollingRandomAccessFile>
+		
+		<RollingRandomAccessFile name="ErrorFiles" fileName="${BASE_PATH}/errors.log" filePattern="${BASE_PATH}/errors__${FILE_PATTERN}.log.gz">
+			<PatternLayout pattern="${LOG_PATTERN}" />
+			<Policies>
+                <SizeBasedTriggeringPolicy size="1 MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="10" />
+		</RollingRandomAccessFile>
+		
+		<RollingRandomAccessFile name="TraceHTML" fileName="${BASE_PATH}/trace.html" filePattern="${BASE_PATH}/trace__${FILE_PATTERN}.html.gz">
+			<CustomHtmlLayout charset="UTF-8" title="Trace Logs" locationInfo="true" fontSize="XSMALL" />
+			<Policies>
+                <SizeBasedTriggeringPolicy size="1 MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="10" />
+		</RollingRandomAccessFile>
+		
+		<RollingRandomAccessFile name="ErrorHTML" fileName="${BASE_PATH}/errors.html" filePattern="${BASE_PATH}/errors__${FILE_PATTERN}.html.gz">
+			<CustomHtmlLayout charset="UTF-8" title="Error Logs" locationInfo="true" fontSize="XSMALL" />
+			<Policies>
+                <SizeBasedTriggeringPolicy size="1 MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="10" />
+		</RollingRandomAccessFile>
+	</Appenders>
+
+
+	<Loggers>
+		<Root level="trace"  includeLocation="true">
+			<AppenderRef ref="Console" />
+		</Root>
+		
+		<AsyncLogger name="com.github.GandhiTC.java.Log4j2Example.tests" additivity="true" includeLocation="true">
+			<AppenderRef ref="ErrorFiles" level="error" />
+			<AppenderRef ref="TraceFiles" level="trace" />
+			<AppenderRef ref="ErrorHTML" level="error" />
+			<AppenderRef ref="TraceHTML" level="trace" />
+		</AsyncLogger>
+	</Loggers>
+	
+	
+</Configuration>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="Log4j2 TestNG Suite">
+	<test name="Log4j2 TestNG Test">
+		<parameter name="browserName" value="firefox headless" />
+		<classes>
+			<class name="com.github.GandhiTC.java.Log4j2Example.tests.RunTestngXMLTest" />
+		</classes>
+	</test>
+</suite>
