@@ -14,9 +14,10 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<argLine>-Dlog4j2.contextSelector=org.apache.logging.log4j.core.async.AsyncLoggerContextSelector
-			-DAsyncLogger.WaitStrategy=busyspin -Dlog4j2.enable.threadlocals=true
-			-Dlog4j2.enable.direct.encoders=true</argLine>
+		<argLine>-Dlog4j2.contextSelector=org.apache.logging.log4j.core.async.AsyncLoggerContextSelector 
+				 -DAsyncLogger.WaitStrategy=busyspin 
+				 -Dlog4j2.enable.threadlocals=true 
+				 -Dlog4j2.enable.direct.encoders=true</argLine>
 		<start-class>com.github.GandhiTC.java.Log4j2Example.tests.RunTestngXMLTest</start-class>
 	</properties>
 

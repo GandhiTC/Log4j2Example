@@ -3,6 +3,7 @@ package com.github.GandhiTC.java.Log4j2Example.tests;
 
 
 import java.io.File;
+import java.util.Enumeration;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import org.apache.logging.log4j.LogManager;
@@ -31,7 +32,8 @@ public class RunAsJavaAppTest
 
 	public static void main(String[] browser)
 	{
-		seLoggingtLevel(Level.SEVERE);
+//		seLoggingtLevel(Level.SEVERE);
+		seLoggingtLevel(Level.OFF);
 		
 		log.debug("Setting up web driver");
 		if(browser.length > 0)
@@ -135,15 +137,30 @@ public class RunAsJavaAppTest
 	}
 
 
-	// https://www.logicbig.com/tutorials/core-java-tutorial/logging/levels.html
+	//	https://www.logicbig.com/tutorials/core-java-tutorial/logging/levels.html
 	private static void seLoggingtLevel(Level targetLevel)
 	{
-		java.util.logging.Logger root = java.util.logging.Logger.getLogger("");
-		root.setLevel(targetLevel);
-
-		for(Handler handler : root.getHandlers())
+		Enumeration<String> loggerNames = java.util.logging.LogManager.getLogManager().getLoggerNames();
+		
+		while(loggerNames.hasMoreElements())
 		{
-			handler.setLevel(targetLevel);
+			String loggerName = loggerNames.nextElement();
+			
+			java.util.logging.Logger root = java.util.logging.Logger.getLogger(loggerName);
+			root.setLevel(targetLevel);
+
+			for(Handler handler : root.getHandlers())
+			{
+				handler.setLevel(targetLevel);
+			}
 		}
+		
+//		java.util.logging.Logger root = java.util.logging.Logger.getLogger("");
+//		root.setLevel(targetLevel);
+//
+//		for(Handler handler : root.getHandlers())
+//		{
+//			handler.setLevel(targetLevel);
+//		}
 	}
 }
